@@ -5,6 +5,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.akaash.testproject20.R;
@@ -27,8 +31,10 @@ public class KeywordListActivity extends AppCompatActivity {
     @BindView(R.id.rvKeywordList)
     RecyclerView rvKeywordList;
 
-/*    @BindView(R.id.toolBar)
-    Toolbar toolbar;*/
+   @BindView(R.id.toolBar)
+    Toolbar toolbar;
+   @BindView(R.id.ivHistoryButton)
+    ImageView ivHistoryButton;
 
     private DBHelper dbHelper;
     //private SimpleCursorAdapter simpleCursorAdapter;
@@ -40,11 +46,12 @@ public class KeywordListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_keyword_list);
         ButterKnife.bind(this);
+        ivHistoryButton.setVisibility(View.GONE);
 
-        /*setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);
         toolbar.setTitle(R.string.KEYWORD_TOOLBAR_TITLE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowTitleEnabled(true);*/
+        getSupportActionBar().setDisplayShowTitleEnabled(true);
 
         dbHelper = new DBHelper(this);
         historyList = dbHelper.getHistory();
@@ -57,5 +64,13 @@ public class KeywordListActivity extends AppCompatActivity {
         else{
             ToastUtils.showToast(this,"List is empty");
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item){
+        if (item.getItemId() == android.R.id.home) {
+            finish();
+        }
+        return super.onOptionsItemSelected(item);
     }
 }
